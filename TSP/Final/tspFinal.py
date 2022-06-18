@@ -1,13 +1,12 @@
-import random
-
 import tsplib95
-from random import randrange
+from hamiltonianPath import HamiltonianPath
 
 
 class TSPProblem:
 
     def __init__(self, path, population_size=100):
         self._matrix = tsplib95.load(path)
+        self._hamiltonian_path = HamiltonianPath(self)
         self._population_size = population_size
         self._solutions = dict()
         self._solutions_decoded = dict()
@@ -20,41 +19,14 @@ class TSPProblem:
             self._generate_solution(solution_num)
 
     def _generate_solution(self, solution_num):
-        new_solution = dict()
-        nodes_quantity = self._get_nodes_quantity()
-        remaining_nodes = self._get_nodes()
-
-        initial_node = random.choice(remaining_nodes)
-        remaining_nodes.remove(initial_node)
-
-        last_node = initial_node
-        while len(new_solution) < nodes_quantity:
-
-            next_node = random.choice(remaining_nodes) if len(remaining_nodes) else None
-
-            if len(new_solution) == nodes_quantity - 2:
-                if self._get_weight(next_node, initial_node) == 0:
-                    remaining_nodes = self._get_nodes()
-                    new_solution.clear()  #
-                    continue  # el ultimo nodo debe ser adyacente al inicial, si no lo es planteo una nueva solucion
-                else: # de lo contrario, obtengo la solucion
-                    new_solution[last_node] = next_node
-                    new_solution[next_node] = initial_node
-                    break
-
-            if last_node == next_node or self._get_weight(last_node, next_node) == 0:
-                continue  # no se puede escoger el mismo nodo como siguiente, y debe ser adyacente al anterior
-            new_solution[last_node] = next_node
-            last_node = next_node
-            remaining_nodes.remove(next_node)
-        self._solutions[solution_num] = new_solution
+        self._solutions[solution_num] = self._hamiltonian_path.get_hamiltonian_cycle()
 
     def _decode_solution(self, solution_num):
         solution = self._solutions[solution_num]
         weight = 0
         for origin in solution.keys():
             destination = solution[origin]
-            weight += self._get_weight(origin, destination)
+            weight += self.get_weight(origin, destination)
         return weight
 
     def decode_solutions(self):
@@ -71,20 +43,36 @@ class TSPProblem:
             self._solutions_fitness[solution] = self._calculate_fitness(self._solutions_decoded[solution])
             print(self._solutions_fitness[solution])
 
-    def _get_weight(self, origin, end):
-        return self._matrix.get_weight(origin, end)
-
-    def _get_nodes(self):
+    def get_nodes(self):
         return list(self._matrix.get_nodes())
 
-    def _get_nodes_quantity(self):
-        return len(self._get_nodes())
+    def get_nodes_quantity(self):
+        return len(self.get_nodes())
+
+    def get_weight(self, origin, end):
+        return self._matrix.get_weight(origin, end)
+
+    def get_graph(self):
+        return self._matrix.as_name_dict()['edge_weights']
+
+    def is_ady(self, origin, end):
+        return self.get_weight(origin, end) != 0 and self.get_weight(origin, end) != 9999
+
+    def get_ady_nodes(self, node):
+        nodes = list(self.get_graph()[node])
+        ady = list()
+        for ady_node in range(len(nodes)):
+            weight = self.get_graph()[node][ady_node]
+            if weight != 0 and weight != 9999:
+                ady.append(ady_node)
+        return ady
+
+    def _get_number_of_ady_nodes(self, node):
+        return len(self.get_ady_nodes(node))
 
 
-
-path = './Resources/Instancias-TSP/br17.atsp'
-TSPProblem = TSPProblem(path, population_size=100)
-TSPProblem.generate_population()
-TSPProblem.decode_solutions()
-TSPProblem.calculate_solutions_fitness()
-
+path2 = './Resources/Instancias-TSP/br17.atsp'
+TSPProblem = TSPProblem(path2, population_size=100)
+# TSPProblem.generate_population()
+# TSPProblem.decode_solutions()
+# TSPProblem.calculate_solutions_fitness()
