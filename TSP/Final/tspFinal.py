@@ -1,3 +1,5 @@
+import math
+
 import tsplib95
 from hamiltonianPath import HamiltonianPath
 
@@ -9,18 +11,14 @@ class TSPProblem:
         self._hamiltonian_path = HamiltonianPath(self)
         self._population_size = population_size
         self._solutions = dict()
-        self._solutions_decoded = dict()
-        self._solutions_fitness = dict()
 
     def generate_population(self):
         print('Inicializando poblacion de manera random')
         for solution_num in range(0, self._population_size):
-            print('generando la solucion: {}'.format(solution_num))
             self._generate_solution(solution_num)
 
     def _generate_solution(self, solution_num):
         self._solutions[solution_num] = self._hamiltonian_path.get_hamiltonian_cycle()
-        print(str(self._solutions[solution_num]))
 
     def _decode_solution(self, solution_num):
         solution = self._solutions[solution_num]
@@ -32,17 +30,19 @@ class TSPProblem:
 
     def decode_solutions(self):
         for solution in range(0, self._population_size):
-            self._solutions_decoded[solution] = self._decode_solution(solution)
-            print(self._solutions_decoded[solution])
+            self._decode_solution(solution)
 
     @staticmethod
     def _calculate_fitness(value):
         return 1 / value
 
+    def _get_exponential_value(self, value):
+        return (1 - math.exp(value * (-1))) / self._population_size
+
     def calculate_solutions_fitness(self):
         for solution in range(0, self._population_size):
-            self._solutions_fitness[solution] = self._calculate_fitness(self._solutions_decoded[solution])
-            print(self._solutions_fitness[solution])
+            fitness = self._calculate_fitness(self._decode_solution(solution))
+            print(fitness)
 
     def get_nodes(self):
         return list(self._matrix.get_nodes())
@@ -75,5 +75,5 @@ class TSPProblem:
 path2 = './Resources/Instancias-TSP/br17.atsp'
 TSPProblem = TSPProblem(path2, population_size=100)
 TSPProblem.generate_population()
-# TSPProblem.decode_solutions()
-# TSPProblem.calculate_solutions_fitness()
+TSPProblem.decode_solutions()
+TSPProblem.calculate_solutions_fitness()

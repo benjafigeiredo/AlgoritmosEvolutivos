@@ -58,7 +58,6 @@ class HamiltonianPath:
             return None
         path[self.nodes - 1] = path[0]
 
-        #self.printsolution(path)
         return self.generate_dict_solution(path)
 
     @staticmethod
