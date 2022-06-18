@@ -20,6 +20,7 @@ class TSPProblem:
 
     def _generate_solution(self, solution_num):
         self._solutions[solution_num] = self._hamiltonian_path.get_hamiltonian_cycle()
+        print(str(self._solutions[solution_num]))
 
     def _decode_solution(self, solution_num):
         solution = self._solutions[solution_num]
@@ -73,6 +74,6 @@ class TSPProblem:
 
 path2 = './Resources/Instancias-TSP/br17.atsp'
 TSPProblem = TSPProblem(path2, population_size=100)
-# TSPProblem.generate_population()
+TSPProblem.generate_population()
 # TSPProblem.decode_solutions()
 # TSPProblem.calculate_solutions_fitness()

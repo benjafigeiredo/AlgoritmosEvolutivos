@@ -46,6 +46,7 @@ class HamiltonianPath:
 
         return False
 
+    # modificar path para que sea un dict donde llave -> nodo origen, value -> nodo siguiente
     def get_hamiltonian_cycle(self):
         path = [-1] * self.nodes
 
@@ -57,8 +58,17 @@ class HamiltonianPath:
             return None
         path[self.nodes - 1] = path[0]
 
-        self.printsolution(path)
-        return path
+        #self.printsolution(path)
+        return self.generate_dict_solution(path)
+
+    @staticmethod
+    def generate_dict_solution(path):
+        solution = dict()
+        for i in range(0, len(path) - 1):
+            origin = path[i]
+            end = path[i + 1]
+            solution[origin] = end
+        return solution
 
     @staticmethod
     def printsolution(path):
