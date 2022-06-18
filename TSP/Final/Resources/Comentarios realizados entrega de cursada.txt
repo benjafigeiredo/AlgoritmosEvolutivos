@@ -1,0 +1,17 @@
+Comentarios:
+
+En cuanto a los parámetros, los valores sugeridos son aceptables.
+Sin embargo, es importante tener en cuenta que en la etapa de experimentación,
+es necesario analizar un rango de valores posibles para cada parámetro, 
+así que los parámetros deben ser configurables. 
+
+En cuanto a la condición de finalización, es correcto finalizar al alcanzar una cantidad
+de generaciones predefinida.
+Por otro lado, la condición de estancamiento de fitness propuesta en el informe no es apropiada.
+Puede ocurrir que, durante la ejercución del algoritmo, de una generación a la otra no exista
+diferencia en cuanto al mejor fitness, pero en las generaciones posteriores el fitness puede
+seguir creciendo. Así que no es correcto cortar la ejecución por esa condición propuesta en el
+informe.
+
+Cuando se quiere aplicar una condición de fin por estancamiento de fitness, es necesario hacer
+un análisis elaborado para determinar si el fitness efectivamente se está estancando o no.
