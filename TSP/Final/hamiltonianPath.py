@@ -46,12 +46,11 @@ class HamiltonianPath:
 
         return False
 
-    # modificar path para que sea un dict donde llave -> nodo origen, value -> nodo siguiente
-    def get_hamiltonian_cycle(self):
+    def get_hamiltonian_cycle(self, initial_node):
         path = [-1] * self.nodes
 
         # initialize from a random vertex
-        path[0] = random.randrange(0, self.nodes)
+        path[0] = initial_node
 
         if not self.generate_hamiltonian_cycle(path, 1):
             print("No existe solucion para este grafo")
@@ -75,3 +74,5 @@ class HamiltonianPath:
         for vertex in path:
             print(vertex, end=" ")
         print("\n")
+
+
