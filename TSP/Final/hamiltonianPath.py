@@ -1,3 +1,4 @@
+import copy
 import random
 
 
@@ -86,17 +87,23 @@ class HamiltonianPath:
                 return False
 
         # Try different vertices as a next candidate
-        for v in range(0, self.nodes):
+        # los candidatos deberian basarse en la tabla
+        candidates = copy.deepcopy(table[path[pos - 1]])
+        if len(candidates):
+            self.order_by_min(candidates, table)
+            for v in range(0, len(candidates)):
 
-            if self.is_valid_vertex_child(v, pos, path, table):
+                if self.is_valid_vertex(candidates[v], pos, path):
+                    reference_table = copy.deepcopy(table)
+                    path[pos] = candidates[v]
+                    self._remove_references(candidates[v], table)
 
-                path[pos] = v
+                    if self.generate_hamiltonian_cycle_child(path, pos + 1, table):
+                        return True
 
-                if self.generate_hamiltonian_cycle_child(path, pos + 1, table):
-                    return True
-
-                # Remove current vertex if it doesn't lead to a solution
-                path[pos] = -1
+                    # Remove current vertex if it doesn't lead to a solution
+                    path[pos] = -1
+                    table = reference_table
 
         return False
 
@@ -105,6 +112,7 @@ class HamiltonianPath:
 
         # initialize from a random vertex
         path[0] = initial_node
+        self._remove_references(path[0], table)
 
         if not self.generate_hamiltonian_cycle_child(path, 1, table):
             print("No existe solucion para este grafo")
@@ -114,30 +122,18 @@ class HamiltonianPath:
         return self.generate_dict_solution(path)
 
     @staticmethod
-    def _remove_references(node, nodes, table):
-        if node in nodes:
-            nodes.remove(node)
+    def _remove_references(node, table):
         for ady in table.values():
             if node in ady:
                 ady.remove(node)
-                if not len(ady):
-                    print('cuando se elimino el nodo: {}, se vacio la tabla de adyacencias')
 
-    def is_valid_vertex_child(self, v, pos, path, table):
-        ady_nodes = table[v]
-
-        if not len(ady_nodes):
-            return None
-
-        if len(v) <= 1:
-            return nodes[0]
-
-        if len(ady_nodes) == 1:
-            return ady_nodes[0]
-        elif self._len_equals(ady_nodes, table):
-            return random.choice(ady_nodes)
+    def _order_candidates(self, candidates, table):
+        if len(candidates) == 1:
+            return
+        elif self._len_equals(candidates, table):
+            return
         else:
-            return self._get_node_min(ady_nodes, table)
+            self.order_by_min(candidates, table)
 
 
     @staticmethod
@@ -148,12 +144,17 @@ class HamiltonianPath:
         return lenghts.count(lenghts[0]) == len(lenghts)
 
     @staticmethod
-    def _get_node_min(ady_nodes, table):
+    def order_by_min(ady_nodes, table):
         ref_size = len(table[ady_nodes[0]])
         ref_node = ady_nodes[0]
-        for ady in ady_nodes:
-            if len(table[ady]) < ref_size:
-                ref_node, ref_size = ady, len(table[ady])
+        ref_pos = 0
+        for i in range(len(ady_nodes)):
+            if len(table[ady_nodes[i]]) < ref_size:
+                temp = ady_nodes[ref_pos]
+                ady_nodes[ref_pos] = ady_nodes[i]
+                ady_nodes[i] = temp
+                ref_pos, ref_node, ref_size = i, ady_nodes[i], len(table[ady_nodes[i]])
         return ref_node
+
 
 
