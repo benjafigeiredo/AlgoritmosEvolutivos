@@ -1,7 +1,6 @@
 import copy
 import math
 import random
-
 import tsplib95
 from hamiltonianPath import HamiltonianPath
 
@@ -183,8 +182,10 @@ class TSPProblem:
 
     def generate_child_population(self, mating_pool, method='cruce basado en arcos'):
         if method.lower() == 'cruce basado en arcos':
+            print('Generado poblacion de hijos con el metodo de cruce basado en arcos ... ')
             return self.edge_based_crossing(mating_pool)
         elif method.lower() == 'cruce de un punto':
+            print('Generando poblacion de hijos con el metodo de cruce de un punto ...')
             return self.point_crossing(mating_pool)
         else:
             print('No se selecciono un metodo apropiado para la generacion de hijos')
@@ -305,8 +306,10 @@ class TSPProblem:
     def apply_mutation(self, child_population, method):
         key = random.choice(list(child_population.keys()))
         if method.lower() == 'mutacion por intercambio':
+            print('Aplicando mutancion por intercambio ...')
             return key, self.exchange_mutation(child_population[key])
         elif method.lower() == 'mutacion por inversion':
+            print('Aplicando mutacion por inversion ...')
             return key, self.inversion_mutation(child_population[key])
         else:
             print('No se selecciono un metodo de mutacion apropiado')
@@ -408,26 +411,77 @@ class TSPProblem:
     def define_new_population(self, actual_population, child_population, actual_fitness, new_fitness, n=None,
                               method='steady-state'):
         if method.lower() == 'steady-state':
-            self.steady_state(actual_population, child_population, actual_fitness, new_fitness, n)
+            print('Generando nueva poblacion mediante el metodo de steady-state ...')
+            return self.steady_state(actual_population, child_population, actual_fitness, new_fitness, n)
+        elif method.lower() == 'elitismo':
+            print('Generando nueva poblacion mediante el metodo de elitismo ...')
+            return self.elitism(actual_population, child_population, actual_fitness, new_fitness)
+        else:
+            print('No se selecciono un metodo apropiado para la generacion de una nueva poblacion.')
+            return None
+
+    # endregion
 
     # region steady-state
     def steady_state(self, actual_population, child_population, actual_fitness, new_fitness, n):
         sort_actual_population = self._sort_solutions_list(actual_fitness)
         sort_child_population = self._sort_solutions_list(new_fitness)
-        # seguir aca, solamente agarrar los ultimos n y los primeros y combinar y ya ta ya terminaste!!
+        size = len(sort_child_population)
+        best_actual_population = sort_actual_population[n:size]
+        best_child_population = sort_child_population[n:size]
+        best_actual_population.extend(best_child_population)
+        return self._get_new_population_steady_state(actual_population, child_population, best_actual_population, n)
+
+    @staticmethod
+    def _get_new_population_steady_state(actual_population, child_population, bests_fitness, n):
+        new_population = dict()
+        i = 0
+        while i < n:
+            solution_num = bests_fitness[i][0]
+            new_population[i] = actual_population[solution_num]
+            i += 1
+        while i < len(bests_fitness):
+            solution_num = bests_fitness[i][0]
+            new_population[i] = child_population[solution_num]
+            i += 1
+        return new_population
+
+    # endregion
+
+    # region elitism
+
+    def elitism(self, actual_population, child_population, actual_fitness, new_fitness):
+        sort_actual_population = self._sort_solutions_list(actual_fitness)
+        sort_child_population = self._sort_solutions_list(new_fitness)
+        return self._get_new_population_elitism(actual_population, child_population, sort_actual_population, sort_child_population)
+
+    @staticmethod
+    def _get_new_population_elitism(actual_population, child_population, actual_fitness, new_fitness):
+        new_population = dict()
+        if actual_fitness[-1][1] > new_fitness[-1][1]:
+            new_population[0] = actual_population[actual_fitness[-1][0]]
+        else:
+            new_population[0] = child_population[new_fitness[-1][0]]
+
+        for i in range(1, len(new_fitness)):
+            new_population[i] = child_population[new_fitness[i][0]]
+        return new_population
 
     # endregion
 
     # endregion
 
-    # region evolutionary algorithm
+    # region evolutional algorithm
     def evolutional_algorithm(self, population_size=100, cross_p=1, mutation_p=0.05, generation_numbers=500,
                               parent_selection_type='torneo', crossing_type='cruce basado en arcos',
-                              mutation_type='mutacion por intercambio'):
+                              mutation_type='mutacion por intercambio', survivors_type='elitismo', n=None,
+                              stagnant_generations_limit=100):
 
         self._standar_init(population_size)
         actual_population = self.generate_population()
-        for i in range(0, generation_numbers):
+        stagnant_generations = 0
+        i = 0
+        while not self.is_finished(i, stagnant_generations, stagnant_generations_limit, generation_numbers):
             fitness = self.calculate_solutions_fitness(actual_population)
 
             mating_pool = self.define_mating_pool(actual_population, fitness, parent_selection_type)
@@ -442,10 +496,20 @@ class TSPProblem:
                 child_population[key] = mutation
 
             new_fitness = self.calculate_solutions_fitness(child_population)
-            self.define_new_population(actual_population, child_population, fitness, new_fitness)
 
+            best_actual_fitness, best_child_fitness = self._get_best_fitness(fitness), self._get_best_fitness(new_fitness)
+            print('best fitness: {}'.format(best_actual_fitness))
 
+            if best_actual_fitness == best_child_fitness:
+                stagnant_generations += 1
+            else:
+                stagnant_generations = 0
 
+            actual_population = self.define_new_population(actual_population, child_population, fitness, new_fitness,
+                                                           n=n, method=survivors_type)
+            i += 1
+
+    # region evolutional algorithm utils
     @staticmethod
     def apply_transformation(parameter):
         rand = random.random()
@@ -455,6 +519,24 @@ class TSPProblem:
         self._population_size = population_size
         self._c_factor = self._get_c_factor()
 
+    @staticmethod
+    def is_finished(i, stagnant_generations, stagnant_generations_limit, generation_number):
+        finished = False
+        if i >= generation_number:
+            print('Se alcanzo la cantidad de generaciones preestablecidas. ')
+            finished = True
+
+        if stagnant_generations >= stagnant_generations_limit:
+            print('Se estanco el fitness luego de {} generaciones. Se finalizo el algoritmo por estancamiento'.format(stagnant_generations_limit))
+            finished = True
+
+        return finished
+
+    def _get_best_fitness(self, population_fitness):
+        return self._sort_solutions_list(population_fitness)[-1][1]
+    # endregion
+
+    # endregion
 
     # region graph utils
     def get_nodes(self):
@@ -488,4 +570,7 @@ class TSPProblem:
 
 path2 = './Resources/Instancias-TSP/br17.atsp'
 TSPProblem = TSPProblem(path2)
-TSPProblem.evolutional_algorithm(population_size=10, generation_numbers=2)
+TSPProblem.evolutional_algorithm(population_size=100, cross_p=1, mutation_p=0.05, generation_numbers=500,
+                                 parent_selection_type='torneo', crossing_type='cruce basado en arcos',
+                                 mutation_type='mutacion por inversion', survivors_type='steady-state', n=50,
+                                 stagnant_generations_limit=100)
