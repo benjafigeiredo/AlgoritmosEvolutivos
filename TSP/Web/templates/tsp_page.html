@@ -1,0 +1,83 @@
+{% include 'head.html' %}
+<body>
+    {% include 'header.html' %}
+    <div class="paragraph_options">
+        <p>Seleccion de parametros para ejecutar el algoritmo evolutivo</p>
+    </div>
+    <div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Tamaño de la población</p>
+            <div class="optionbox">
+                <input type="number" id="population_size" placeholder="Inserte un numero entero">
+            </div>
+        </div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Número de generaciones</p>
+            <div class="optionbox">
+                <input type="number" id="generations_number" placeholder="Inserte un numero entero">
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Seleccion de padres</p>
+            <div class="optionbox">
+                <select> 
+                <option>Por torneo</option>
+                <option>Por rueda de ruleta</option>
+                </select>       
+            </div>
+        </div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Cruzamiento</p>
+            <div class="optionbox">
+                <select> 
+                <option>Cruce basado en arcos</option>
+                <option>Cruce basado en un punto</option>
+                </select>       
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Mutacion</p>
+            <div class="optionbox">
+                <select> 
+                <option>Por intercambio</option>
+                <option>Por inversion</option>
+                </select>       
+            </div>
+        </div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Seleccion de sobrevivientes</p>
+            <div class="optionbox">
+                <select> 
+                <option>Steady-state</option>
+                <option>Elitismo</option>
+                </select>       
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Probabilidad de cruce</p>
+            <div class="optionbox">
+                <input type="number" id="population_size" placeholder="Inserte un numero entero">
+            </div>
+        </div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <p>Probabilidad de mutacion</p>
+            <div class="optionbox">
+                <input type="number" id="population_size" placeholder="Inserte un numero entero">
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="paragraph_options_small" style="display: inline-block;">
+            <div class="optionbox">
+                <button><span>Ejecutar </span></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

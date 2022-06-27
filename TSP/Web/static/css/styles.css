@@ -1,109 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    list-style: none;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
+
+html{
+  height: 100%;
+} 
 
 body{
-    font-family: montserrat;
+  height: 100%;
+}
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::selection{
+  background: rgb(0,123,255,0.3);
+}
+.container{
+  height: 100%;
+  background: url('../image/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-nav{
-    background: #0082e6;
-    height: 80px;
+.container span{
+  color: #fff;
+  font-size: 3vw;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content{
+  max-width: 1250px;
+  margin: auto;
+  padding: 0 30px;
+}
+.navbar{
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  padding: 25px 0;
+  transition: all 0.3s ease;
+}
+.navbar.sticky{
+  background: #1b1b1b;
+  padding: 10px 0;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.1);
+}
+.navbar .content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .logo a{
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.navbar .menu-list{
+  display: inline-flex;
+}
+.menu-list li{
+  list-style: none;
+}
+.menu-list li a{
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.menu-list li a:hover{
+  color: #fd0000;
+}
+.banner{
+  background: url("banner.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.about{
+  padding: 30px 0;
+}
+.about .title{
+  font-size: 38px;
+  font-weight: 700;
+}
+.about p{
+  padding-top: 20px;
+  text-align: justify;
+}
+.icon{
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+.menu-list .cancel-btn{
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+@media (max-width: 1230px) {
+  .content{
+    padding: 0 60px;
+  }
+}
+@media (max-width: 1100px) {
+  .content{
+    padding: 0 40px;
+  }
+}
+@media (max-width: 900px) {
+  .content{
+    padding: 0 30px;
+  }
+}
+@media (max-width: 868px) {
+  body.disabled{
+    overflow: hidden;
+  }
+  .icon{
+    display: block;
+  }
+  .icon.hide{
+    display: none;
+  }
+  .navbar .menu-list{
+    position: fixed;
+    height: 100vh;
     width: 100%;
+    max-width: 400px;
+    left: -100%;
+    top: 0px;
+    display: block;
+    padding: 40px 0;
+    text-align: center;
+    background: #222;
+    transition: all 0.3s ease;
+  }
+  .navbar.show .menu-list{
+    left: 0%;
+  }
+  .navbar .menu-list li{
+    margin-top: 45px;
+  }
+  .navbar .menu-list li a{
+    font-size: 23px;
+    margin-left: -100%;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .navbar.show .menu-list li a{
+    margin-left: 0px;
+  }
+}
+@media (max-width: 380px) {
+  .navbar .logo a{
+    font-size: 27px;
+  }
 }
 
-label.logo{
-    color: white;
-    font-size: 35px;
-    line-height: 80px;
-    font-weight: bold;
+
+.optionbox{
+
+  position: relative;
+  margin: 10px;
+  padding: 10px; 
+}
+.optionbox input{
+  background: #1b1819;
+  color: #fff;
+  padding: 10px;
+  width: 225px;
+  height: 40px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 5px rgb(7, 7, 7);
+  -webkit-appearance: button;
+  outline: none;
 }
 
-nav ul{
-    float: right;
-    margin-right: 20px;
+.optionbox button{
+  position: relative;
+  left: 145px;
+  border-radius: 4px;
+  background: #1b1819;
+  color: #fff;
+  padding: 10px;
+  width: 225px;
+  height: 40px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 5px rgb(7, 7, 7);
+  -webkit-appearance: button;
+  outline: none;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+.optionbox button:after {
+  content: "";
+  background: #ffffff;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px!important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 2s
 }
 
-nav ul li{
-    display: inline-block;
-    line-height: 80px;
-    margin: 0 5px;
+.optionbox button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+.optionbox button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
 }
 
-nav ul li a{
-    color: white;
-    font-size: 17px; 
-    padding: 7px 13px;
-    border-radius: 3px;
-    text-transform: uppercase;
+.optionbox button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
 }
 
-a.active, a:hover{
-    background: #1b9bff;
-    transition: .5s;
+.optionbox button:hover {
+  background: #fd0000;
 }
 
-.checkbtn{
-    font-size: 30px;
-    color: white;
-    float: right; 
-    line-height: 80px;
-    margin-right: 40px;
-    cursor: pointer;
-    display: none;
+.optionbox button:hover span {
+  padding-right: 25px;
 }
 
-#check{
-    display: none;
+.optionbox button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.optionbox select {
+    background: #1b1819;
+    color: #fff;
+    padding: 10px;
+    width: 225px;
+    height: 40px;
+    border: none;
+    font-size: 15px;
+    box-shadow: 0 5px 5px rgb(7, 7, 7);
+    -webkit-appearance: button;
+    outline: none;
 }
 
-@media (max-width:952px){
-    label.logo{
-        font-size: 30px;
-        padding-left: 50px;
-    }
-
-    nav ul li a{
-        font-size: 16px;
-    }
+.paragraph_options{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  margin: 10px;
+  padding: 5px; 
 }
 
-@media (max-width:858px){
-    .checkbtn{
-        display: block;
-    }
-
-    ul {
-        position: fixed;
-        width: 100%;
-        height: 100vh;
-        background: #2c3e50;
-        top: 80px;
-        left: -100%; 
-        text-align: center; 
-        transition: all .5s;
-    }
-
-    nav ul li {
-        display: block;
-        margin: 50px 0;
-        line-height: 30px;
-    }
-
-    nav ul li a {
-        font-size: 20px;
-    }
-
-    a:hover, a:active{
-        background: none;
-        color: #0082e6;
-    }
-
-    #check:checked ~ ul{
-        left: 0;
-    }
+.paragraph_options_small{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  margin: 10px;
+  padding: 5px; 
+  text-align: center;
 }
