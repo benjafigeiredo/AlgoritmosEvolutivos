@@ -1,83 +1,89 @@
 {% include 'head.html' %}
 <body>
     {% include 'header.html' %}
+    <div class="container">
+        <span>Ejecucion del algoritmo implementado para TSP</span> 
+    </div>
     <div class="paragraph_options">
         <p>Seleccion de parametros para ejecutar el algoritmo evolutivo</p>
     </div>
-    <div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Tamaño de la población</p>
-            <div class="optionbox">
-                <input type="number" id="population_size" placeholder="Inserte un numero entero">
+    <form action="{{ url_for ('views.get_parameters')}}" method="post">
+        <div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Tamaño de la población</p>
+                <div class="optionbox">
+                    <input type="number" id="population_size" name="population_size" placeholder="Ingrese un numero entero">
+                </div>
+            </div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Número de generaciones</p>
+                <div class="optionbox">
+                    <input type="number" id="generations_number" name="generation_size" placeholder="Ingrese un numero entero">
+                </div>
             </div>
         </div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Número de generaciones</p>
-            <div class="optionbox">
-                <input type="number" id="generations_number" placeholder="Inserte un numero entero">
+        <div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Seleccion de padres</p>
+                <div class="optionbox">
+                    <select name="parent_method"> 
+                    <option>Torneo</option>
+                    <option>Rueda de ruleta</option>
+                    </select>       
+                </div>
+            </div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Cruzamiento</p>
+                <div class="optionbox">
+                    <select name="cross_method"> 
+                    <option>Cruce basado en arcos</option>
+                    <option>Cruce basado en un punto</option>
+                    </select>       
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Seleccion de padres</p>
-            <div class="optionbox">
-                <select> 
-                <option>Por torneo</option>
-                <option>Por rueda de ruleta</option>
-                </select>       
+        <div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Mutacion</p>
+                <div class="optionbox">
+                    <select name="mutation_method"> 
+                    <option>Intercambio</option>
+                    <option>Inversion</option>
+                    </select>       
+                </div>
+            </div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Seleccion de sobrevivientes</p>
+                <div class="optionbox">
+                    <select name="survivors_method"> 
+                    <option>Steady-state</option>
+                    <option>Elitismo</option>
+                    </select>       
+                </div>
             </div>
         </div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Cruzamiento</p>
-            <div class="optionbox">
-                <select> 
-                <option>Cruce basado en arcos</option>
-                <option>Cruce basado en un punto</option>
-                </select>       
+        <div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Probabilidad de cruce</p>
+                <div class="optionbox">
+                    <input type="number" step="0.01" id="population_size" name="cross_p" placeholder="Ingrese numero decimal (0,1)">
+                </div>
+            </div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Probabilidad de mutacion</p>
+                <div class="optionbox">
+                    <input type="number" step="0.01" id="population_size" name="mutation_p" placeholder="Ingrese numero decimal (0,1)">
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Mutacion</p>
-            <div class="optionbox">
-                <select> 
-                <option>Por intercambio</option>
-                <option>Por inversion</option>
-                </select>       
+        <div>
+            <div class="paragraph_options_small" style="display: inline-block;">
+                <div class="optionbox">
+                    <input type="submit" value="Ejecutar">
+                </div>
             </div>
         </div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Seleccion de sobrevivientes</p>
-            <div class="optionbox">
-                <select> 
-                <option>Steady-state</option>
-                <option>Elitismo</option>
-                </select>       
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Probabilidad de cruce</p>
-            <div class="optionbox">
-                <input type="number" id="population_size" placeholder="Inserte un numero entero">
-            </div>
-        </div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <p>Probabilidad de mutacion</p>
-            <div class="optionbox">
-                <input type="number" id="population_size" placeholder="Inserte un numero entero">
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="paragraph_options_small" style="display: inline-block;">
-            <div class="optionbox">
-                <button><span>Ejecutar </span></button>
-            </div>
-        </div>
-    </div>
+    </form>
+    
 </body>
 </html>

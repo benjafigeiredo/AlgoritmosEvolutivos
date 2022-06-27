@@ -27,7 +27,7 @@ body{
   background: rgb(0,123,255,0.3);
 }
 .container{
-  height: 100%;
+  height: 50%;
   background: url('../image/background.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -40,7 +40,6 @@ body{
   font-size: 3vw;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  text-transform: uppercase;
   background: rgba(0,0,0,0.5);
   padding: 10px;
   position: absolute;
@@ -202,9 +201,9 @@ body{
   outline: none;
 }
 
-.optionbox button{
+.optionbox input[type=submit]{
   position: relative;
-  left: 145px;
+  left: 62%;
   border-radius: 4px;
   background: #1b1819;
   color: #fff;
@@ -221,7 +220,7 @@ body{
   overflow: hidden;
   cursor: pointer;
 }
-.optionbox button:after {
+.optionbox input[type=submit]:after {
   content: "";
   background: #ffffff;
   display: block;
@@ -234,40 +233,27 @@ body{
   transition: all 2s
 }
 
-.optionbox button:active:after {
+.optionbox input[type=submit]:active:after {
   padding: 0;
   margin: 0;
   opacity: 1;
   transition: 0s
 }
-.optionbox button span {
+.optionbox input[value="Ejecutar"] {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.optionbox button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.optionbox button:hover {
+.optionbox input[type=submit]:hover {
   background: #fd0000;
 }
 
-.optionbox button:hover span {
+.optionbox input[value="Ejecutar"]:hover {
   padding-right: 25px;
 }
 
-.optionbox button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
 .optionbox select {
     background: #1b1819;
     color: #fff;
