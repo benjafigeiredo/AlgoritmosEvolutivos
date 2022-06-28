@@ -89,7 +89,7 @@ class HamiltonianPath:
         # Try different vertices as a next candidate
         # los candidatos deberian basarse en la tabla
         candidates = copy.deepcopy(table[path[pos - 1]])
-        if len(candidates):
+        if candidates is not None and len(candidates):
             self.order_by_min(candidates, table)
             for v in range(0, len(candidates)):
 

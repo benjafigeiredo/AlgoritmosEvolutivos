@@ -2,7 +2,11 @@ import copy
 import math
 import random
 import tsplib95
-from hamiltonianPath import HamiltonianPath
+from Final.hamiltonianPath import HamiltonianPath
+import networkx as nx
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 class TSPProblem:
@@ -48,6 +52,13 @@ class TSPProblem:
     def decode_solutions(self, solutions):
         for solution in range(0, self._population_size):
             self._decode_solution(solutions, solution)
+
+    def decode_solution(self, solution):
+        weight = 0
+        for origin in solution.keys():
+            destination = solution[origin]
+            weight += self.get_weight(origin, destination)
+        return weight
     # endregion
 
     # region fitness
@@ -184,7 +195,7 @@ class TSPProblem:
         if method.lower() == 'cruce basado en arcos':
             print('Generado poblacion de hijos con el metodo de cruce basado en arcos ... ')
             return self.edge_based_crossing(mating_pool)
-        elif method.lower() == 'cruce de un punto':
+        elif method.lower() == 'cruce basado en un punto':
             print('Generando poblacion de hijos con el metodo de cruce de un punto ...')
             return self.point_crossing(mating_pool)
         else:
@@ -305,10 +316,10 @@ class TSPProblem:
     # region define mutations
     def apply_mutation(self, child_population, method):
         key = random.choice(list(child_population.keys()))
-        if method.lower() == 'mutacion por intercambio':
+        if method.lower() == 'intercambio':
             print('Aplicando mutancion por intercambio ...')
             return key, self.exchange_mutation(child_population[key])
-        elif method.lower() == 'mutacion por inversion':
+        elif method.lower() == 'inversion':
             print('Aplicando mutacion por inversion ...')
             return key, self.inversion_mutation(child_population[key])
         else:
@@ -508,6 +519,12 @@ class TSPProblem:
             actual_population = self.define_new_population(actual_population, child_population, fitness, new_fitness,
                                                            n=n, method=survivors_type)
             i += 1
+        return self._get_best_solution(actual_population)
+
+    def _get_best_solution(self, population):
+        solution_num = self._sort_solutions_list(self.calculate_solutions_fitness(population))[-1][0]
+        return population[solution_num]
+
 
     # region evolutional algorithm utils
     @staticmethod
@@ -534,6 +551,24 @@ class TSPProblem:
 
     def _get_best_fitness(self, population_fitness):
         return self._sort_solutions_list(population_fitness)[-1][1]
+
+    def get_solution_graph(self, best_solution):
+        G = nx.Graph()
+        for key in best_solution.keys():
+            G.add_node(key)
+            G.add_edge(key, best_solution[key])
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos=pos, cmap=plt.get_cmap('jet'), node_color='red', with_labels=True)
+        nx.draw_networkx_edge_labels(G, pos, font_color='red', edge_labels=self._get_edge_labels(G))
+        plt.plot([], [], ' ', label='costo del viaje: {}'.format(self.decode_solution(best_solution)))
+        plt.legend(loc='upper left')
+        plt.savefig("../Web/static/image/best_solution.png")
+        plt.clf()
+
+    def _get_edge_labels(self, G):
+        return dict([((n1, n2), f'{self.get_weight(n1, n2)}')
+              for n1, n2 in G.edges])
+
     # endregion
 
     # endregion
@@ -568,9 +603,12 @@ class TSPProblem:
     # endregion
 
 
+"""
 path2 = './Resources/Instancias-TSP/br17.atsp'
 TSPProblem = TSPProblem(path2)
 TSPProblem.evolutional_algorithm(population_size=100, cross_p=1, mutation_p=0.05, generation_numbers=500,
                                  parent_selection_type='torneo', crossing_type='cruce basado en arcos',
                                  mutation_type='mutacion por inversion', survivors_type='steady-state', n=50,
                                  stagnant_generations_limit=100)
+"""
+
