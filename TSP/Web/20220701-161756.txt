@@ -1,0 +1,62 @@
+parametros: tamaño poblacion: 100
+numero de generaciones: 50
+metodo de seleccion de padres: Torneo
+metodo de cruzamiento: Cruce basado en arcos
+metodo de mutacion: Intercambio
+seleccion de sobrevivientes: Steady-state
+probabilidad de cruce: 1.0
+probabilidad de mutacion: 0.1
+estancamiento de generaciones: 100
+mejor fitness generacion 0: 0.006329113924050633
+mejor fitness generacion 1: 0.006329113924050633
+mejor fitness generacion 2: 0.006329113924050633
+mejor fitness generacion 3: 0.007246376811594203
+mejor fitness generacion 4: 0.007246376811594203
+mejor fitness generacion 5: 0.007462686567164179
+mejor fitness generacion 6: 0.01
+mejor fitness generacion 7: 0.011494252873563218
+mejor fitness generacion 8: 0.011494252873563218
+mejor fitness generacion 9: 0.011494252873563218
+mejor fitness generacion 10: 0.011494252873563218
+mejor fitness generacion 11: 0.011494252873563218
+mejor fitness generacion 12: 0.011494252873563218
+mejor fitness generacion 13: 0.011494252873563218
+mejor fitness generacion 14: 0.011494252873563218
+mejor fitness generacion 15: 0.011494252873563218
+mejor fitness generacion 16: 0.011494252873563218
+mejor fitness generacion 17: 0.011494252873563218
+mejor fitness generacion 18: 0.011494252873563218
+mejor fitness generacion 19: 0.011494252873563218
+mejor fitness generacion 20: 0.011494252873563218
+mejor fitness generacion 21: 0.011494252873563218
+mejor fitness generacion 22: 0.011494252873563218
+mejor fitness generacion 23: 0.011494252873563218
+mejor fitness generacion 24: 0.011494252873563218
+mejor fitness generacion 25: 0.011494252873563218
+mejor fitness generacion 26: 0.011494252873563218
+mejor fitness generacion 27: 0.011494252873563218
+mejor fitness generacion 28: 0.011494252873563218
+mejor fitness generacion 29: 0.011494252873563218
+mejor fitness generacion 30: 0.011494252873563218
+mejor fitness generacion 31: 0.011494252873563218
+mejor fitness generacion 32: 0.011494252873563218
+mejor fitness generacion 33: 0.011494252873563218
+mejor fitness generacion 34: 0.011494252873563218
+mejor fitness generacion 35: 0.011494252873563218
+mejor fitness generacion 36: 0.011494252873563218
+mejor fitness generacion 37: 0.011494252873563218
+mejor fitness generacion 38: 0.011494252873563218
+mejor fitness generacion 39: 0.011494252873563218
+mejor fitness generacion 40: 0.011494252873563218
+mejor fitness generacion 41: 0.011494252873563218
+mejor fitness generacion 42: 0.011494252873563218
+mejor fitness generacion 43: 0.011494252873563218
+mejor fitness generacion 44: 0.011494252873563218
+mejor fitness generacion 45: 0.011494252873563218
+mejor fitness generacion 46: 0.011494252873563218
+mejor fitness generacion 47: 0.011494252873563218
+mejor fitness generacion 48: 0.011494252873563218
+mejor fitness generacion 49: 0.011494252873563218
+mejor solucion: {15: 16, 16: 14, 14: 3, 3: 5, 5: 4, 4: 6, 6: 8, 8: 9, 9: 11, 11: 10, 10: 13, 13: 12, 12: 2, 2: 1, 1: 0, 0: 7, 7: 15}
+fitness de la mejor solucion: 0.011494252873563218
+tiempo de ejecucion: 6.5589919090271

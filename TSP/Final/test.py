@@ -74,6 +74,7 @@ class Test:
 # continuar test para ver si el circuito hamiltoniano con condiciones
 matriz2 = inicializar_matriz()
 test = Test(matriz2)
+
 parent11 = test.get_parent(2)
 parent21 = test.get_parent(6)
 table = test.get_table(parent11, parent21)

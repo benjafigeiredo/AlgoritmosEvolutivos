@@ -37,7 +37,7 @@ body{
 
 .container span{
   color: #fff;
-  font-size: 3vw;
+  font-size: 2vw;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   background: rgba(0,0,0,0.5);
@@ -203,7 +203,6 @@ body{
 
 .optionbox input[type=submit]{
   position: relative;
-  left: 62%;
   border-radius: 4px;
   background: #1b1819;
   color: #fff;
@@ -284,6 +283,36 @@ body{
 
 .tsp_solution{
   position: relative;
-  bottom: 100%;
-  left: 50%;
+}
+.tsp_solution img{
+    width: 100%;
+    height: 100%;
+}
+
+.tsp_div{
+    position: absolute;
+    right: 25%;
+}
+
+.info_tsp{
+    white-space: pre-line;
+    position: relative;
+    left: 50%;
+    bottom: 110%;
+    width: 40%;
+    height: 50%;
+}
+
+.info_tsp p{
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    background: #1b1819;
+    color: #fff;
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    box-shadow: 0 5px 5px rgb(7, 7, 7);
+    -webkit-appearance: button;
+    outline: none;
 }

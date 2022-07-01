@@ -2,7 +2,7 @@
 <body>
     {% include 'header.html' %}
     <div class="container">
-        <span>Ejecucion del algoritmo implementado para TSP</span> 
+        <span>Ejecucion del algoritmo evolutivo TSP</span>
     </div>
     <div class="paragraph_options">
         <p>Seleccion de parametros para ejecutar el algoritmo evolutivo</p>
@@ -78,15 +78,30 @@
         </div>
         <div>
             <div class="paragraph_options_small" style="display: inline-block;">
+                <p>Seleccion de grafo</p>
+                <div class="optionbox">
+                    <select name="graph_file">
+                    <option>br17.atsp</option>
+                    <option>p43.atsp</option>
+                    </select>
+                </div>
+            </div>
+            <div class="paragraph_options_small" style="display: inline-block;">
                 <div class="optionbox">
                     <input type="submit" value="Ejecutar">
                 </div>
             </div>
         </div>
     </form>
-    <div class="tsp_solution">
-        <img src="{{ url_for ('static', filename='image/best_solution.png')}}">
+    <div class="tsp_div">
+        <div class="tsp_solution">
+            <img src="{{ url_for ('static', filename='image/best_solution.png')}}">
+        </div>
     </div>
-    
+    <div class="info_tsp">
+        {% for key, value in data.items() %}
+            <p>{{ key }}:<br>{{ value }}</p>
+        {% endfor %}
+    </div>
 </body>
 </html>

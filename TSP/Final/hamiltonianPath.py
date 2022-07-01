@@ -87,7 +87,6 @@ class HamiltonianPath:
                 return False
 
         # Try different vertices as a next candidate
-        # los candidatos deberian basarse en la tabla
         candidates = copy.deepcopy(table[path[pos - 1]])
         if candidates is not None and len(candidates):
             self.order_by_min(candidates, table)
@@ -145,16 +144,14 @@ class HamiltonianPath:
 
     @staticmethod
     def order_by_min(ady_nodes, table):
-        ref_size = len(table[ady_nodes[0]])
-        ref_node = ady_nodes[0]
-        ref_pos = 0
-        for i in range(len(ady_nodes)):
-            if len(table[ady_nodes[i]]) < ref_size:
-                temp = ady_nodes[ref_pos]
-                ady_nodes[ref_pos] = ady_nodes[i]
-                ady_nodes[i] = temp
-                ref_pos, ref_node, ref_size = i, ady_nodes[i], len(table[ady_nodes[i]])
-        return ref_node
+        ady_table = dict()
+        for ady in ady_nodes:
+            ady_table[ady] = table.get(ady)
+        res = sorted(ady_table, key=lambda key: len(ady_table[key]))
+        ady_nodes.clear()
+        for value in res:
+            ady_nodes.append(int(value))
+
 
 
 
