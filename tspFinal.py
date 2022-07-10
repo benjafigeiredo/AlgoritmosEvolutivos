@@ -613,7 +613,7 @@ class TSPProblem:
         plt.plot([], [], ' ', label='mejora: {}%'.format(math.floor((initial_cost / bs_cost)*100)))
         plt.plot([], [], ' ', label='tiempo de ejecucion: {} secs'.format(math.floor(time_ex)))
         plt.legend(loc='upper left')
-        plt.savefig("../Web/static/image/best_solution.png")
+        plt.savefig("../static/image/best_solution.png")
         plt.clf()
 
     def _get_edge_labels(self, G):
