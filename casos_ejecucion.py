@@ -1,4 +1,4 @@
-from Web.tspFinal import TSPProblem
+from tspFinal import TSPProblem
 import matplotlib.pyplot as plt
 import numpy as np
 
