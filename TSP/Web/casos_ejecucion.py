@@ -1,13 +1,12 @@
-from Final.tspFinal import TSPProblem
-import math
+from Web.tspFinal import TSPProblem
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-path_br17 = './Resources/Instancias-TSP/br17.atsp'
+path_br17 = 'br17.atsp'
 tsp_br17 = TSPProblem(path_br17)
 
-path_p43 = './Resources/Instancias-TSP/p43.atsp'
+path_p43 = 'p43.atsp'
 tsp_p43 = TSPProblem(path_p43)
 
 p43_matrix = tsp_p43.get_graph()

@@ -1,4 +1,4 @@
-from hamiltonianPath import HamiltonianPath
+from Web.hamiltonianPath import HamiltonianPath
 
 
 def inicializar_matriz():

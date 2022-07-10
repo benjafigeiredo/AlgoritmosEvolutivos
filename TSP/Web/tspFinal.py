@@ -4,10 +4,10 @@ import random
 import time
 import datetime
 import tsplib95
-from Final.hamiltonianPath import HamiltonianPath
+from hamiltonianPath import HamiltonianPath
 import networkx as nx
 import matplotlib
-# matplotlib.use('Agg')
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 

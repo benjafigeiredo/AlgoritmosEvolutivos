@@ -1,7 +1,6 @@
 import math
-
 from flask import Blueprint, request, render_template, Response
-from Final.tspFinal import TSPProblem
+from tspFinal import TSPProblem
 from datetime import datetime
 from time import sleep
 
@@ -26,7 +25,7 @@ def get_parameters():
         cross_p = float(request.form.get("cross_p"))
         mutation_p = float(request.form.get("mutation_p"))
         file_name = request.form.get("graph_file")
-        path2 = '../Final/Resources/Instancias-TSP/{}'.format(file_name)
+        path2 = './{}'.format(file_name)
         tsp = TSPProblem(path2)
         best_solution, initial_cost, time_ex, data = tsp.evolutional_algorithm(population_size=psize, cross_p=cross_p, mutation_p=mutation_p,
                                                   generation_numbers=gsize, parent_selection_type=parent_method,
