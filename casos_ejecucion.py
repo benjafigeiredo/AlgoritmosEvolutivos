@@ -8,29 +8,7 @@ tsp_br17 = TSPProblem(path_br17)
 
 path_p43 = 'p43.atsp'
 tsp_p43 = TSPProblem(path_p43)
-
-p43_matrix = tsp_p43.get_graph()
-p43_matrix = np.array(p43_matrix)
-
-fig, ax = plt.subplots(figsize=(40, 40))
-
-plt.xticks(range(0, tsp_p43.get_nodes_quantity(), 1))
-plt.yticks(range(0, tsp_p43.get_nodes_quantity(), 1))
-ax.imshow(p43_matrix, cmap=plt.cm.get_cmap('Blues'), aspect='auto')
-ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=0.5)
-
-
-for i in range(tsp_p43.get_nodes_quantity()):
-    for j in range(tsp_p43.get_nodes_quantity()):
-        c = p43_matrix[j, i]
-        if i != j:
-            plt.text(i, j, str(c), va='center', ha='center')
-        else:
-            plt.text(i, j, str('\u221E'), va='center', ha='center')
-
-plt.show()
-
-
+    
 ruleta = 'rueda de ruleta'
 torneo = 'torneo'
 punto = 'cruce basado en un punto'
