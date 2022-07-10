@@ -589,11 +589,9 @@ class TSPProblem:
     def is_finished(i, stagnant_generations, stagnant_generations_limit, generation_number):
         finished = False
         if i >= generation_number:
-            print('Se alcanzo la cantidad de generaciones preestablecidas. ')
             finished = True
 
         if stagnant_generations >= stagnant_generations_limit:
-            print('Se estanco el fitness luego de {} generaciones. Se finalizo el algoritmo por estancamiento'.format(stagnant_generations_limit))
             finished = True
 
         return finished
@@ -601,7 +599,7 @@ class TSPProblem:
     def _get_best_fitness(self, population_fitness):
         return self._sort_solutions_list(population_fitness)[-1][1]
 
-    def get_solution_graph(self, best_solution, initial_cost, time_ex, config):
+    def get_solution_graph(self, best_solution, initial_cost, time_ex, config=None):
         G = nx.Graph()
         for key in best_solution.keys():
             G.add_node(key)

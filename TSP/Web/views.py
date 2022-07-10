@@ -34,7 +34,6 @@ def get_parameters():
                                                   survivors_type=survivors_method, n=math.floor(psize / 2),
                                                   stagnant_generations_limit=100)
         tsp.get_solution_graph(best_solution, initial_cost, time_ex)
-        tsp.generate_txt_file(data)
         display_data = tsp.get_display_data(data)
     return render_template("tsp_page.html", data=display_data)
 
