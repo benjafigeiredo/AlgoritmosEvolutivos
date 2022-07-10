@@ -7,7 +7,7 @@ import tsplib95
 from Final.hamiltonianPath import HamiltonianPath
 import networkx as nx
 import matplotlib
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
@@ -498,7 +498,6 @@ class TSPProblem:
                               parent_selection_type='torneo', crossing_type='cruce basado en arcos',
                               mutation_type='mutacion por intercambio', survivors_type='elitismo', n=None,
                               stagnant_generations_limit=100, config_n=None):
-        print('ejecutando config: {}'.format(config_n))
         values_txt = dict()
         values_txt['parametros'] = 'tamaño poblacion: {}, numero de generaciones: {}\nmetodo de seleccion de padres: {}, ' \
                                    'metodo de cruzamiento: {}\nmetodo de mutacion: {}, seleccion de sobrevivientes: {}\n' \
@@ -515,7 +514,6 @@ class TSPProblem:
         initial_cost = self._decode_solution(actual_population, 0)
         while not self.is_finished(i, stagnant_generations, stagnant_generations_limit, generation_numbers):
 
-            print('procesando generacion numero: {}'.format(i))
             fitness = self.calculate_solutions_fitness(actual_population)
 
             mating_pool = self.define_mating_pool(actual_population, fitness, parent_selection_type)
@@ -548,9 +546,6 @@ class TSPProblem:
         values_txt['fitness de la mejor solucion'] = str(best_fitness)
         values_txt['tiempo de ejecucion'] = str(end - start)
         values_txt['costo_viaje'] = str(1 / best_fitness)
-
-        self.generate_txt_file(values_txt, config_n)
-        self.get_solution_graph(best_solution, initial_cost, end - start, config_n)
 
         return best_solution, initial_cost, end - start, values_txt
 
@@ -620,8 +615,7 @@ class TSPProblem:
         plt.plot([], [], ' ', label='mejora: {}%'.format(math.floor((initial_cost / bs_cost)*100)))
         plt.plot([], [], ' ', label='tiempo de ejecucion: {} secs'.format(math.floor(time_ex)))
         plt.legend(loc='upper left')
-        # plt.savefig("../Web/static/image/best_solution.png")
-        plt.savefig('./{}.png'.format(config))
+        plt.savefig("../Web/static/image/best_solution.png")
         plt.clf()
 
     def _get_edge_labels(self, G):

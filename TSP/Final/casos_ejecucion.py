@@ -1,5 +1,7 @@
 from Final.tspFinal import TSPProblem
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 path_br17 = './Resources/Instancias-TSP/br17.atsp'
@@ -7,6 +9,28 @@ tsp_br17 = TSPProblem(path_br17)
 
 path_p43 = './Resources/Instancias-TSP/p43.atsp'
 tsp_p43 = TSPProblem(path_p43)
+
+p43_matrix = tsp_p43.get_graph()
+p43_matrix = np.array(p43_matrix)
+
+fig, ax = plt.subplots(figsize=(40, 40))
+
+plt.xticks(range(0, tsp_p43.get_nodes_quantity(), 1))
+plt.yticks(range(0, tsp_p43.get_nodes_quantity(), 1))
+ax.imshow(p43_matrix, cmap=plt.cm.get_cmap('Blues'), aspect='auto')
+ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=0.5)
+
+
+for i in range(tsp_p43.get_nodes_quantity()):
+    for j in range(tsp_p43.get_nodes_quantity()):
+        c = p43_matrix[j, i]
+        if i != j:
+            plt.text(i, j, str(c), va='center', ha='center')
+        else:
+            plt.text(i, j, str('\u221E'), va='center', ha='center')
+
+plt.show()
+
 
 ruleta = 'rueda de ruleta'
 torneo = 'torneo'
@@ -17,6 +41,10 @@ intercambio = 'intercambio'
 steady_state = 'steady-state'
 elitismo = 'elitismo'
 
+
+
+"""
+tsp_br17.evolutional_algorithm(100, 1, 1, 1000, torneo, punto, intercambio, steady_state, math.floor(100/2), 100, 'config65')
 # tsp_br17.evolutional_algorithm(100, 1, 0.1, 500, torneo, arcos, intercambio, steady_state, math.floor(100/2), 100, 'config1')
 # tsp_p43.evolutional_algorithm(100, 1, 0.1, 500, torneo, arcos, intercambio, steady_state, math.floor(100/2), 100, 'config2')
 # tsp_br17.evolutional_algorithm(200, 1, 0.2, 1000, torneo, arcos, intercambio, steady_state, math.floor(200/2), 100, 'config3')
@@ -79,7 +107,7 @@ elitismo = 'elitismo'
 tsp_br17.evolutional_algorithm(200, 1, 0.2, 1000, ruleta, arcos, inversion, elitismo, math.floor(200/2), 100, 'config47')
 tsp_p43.evolutional_algorithm(200, 1, 0.2, 1000, ruleta, arcos, inversion, elitismo, math.floor(200/2), 100, 'config48')
 
-"""
+
 tsp_br17.evolutional_algorithm(100, 1, 0.1, 500, ruleta, punto, intercambio, steady_state, math.floor(100/2), 100, 'config49')
 tsp_p43.evolutional_algorithm(100, 1, 0.1, 500, ruleta, punto, intercambio, steady_state, math.floor(100/2), 100, 'config50')
 tsp_br17.evolutional_algorithm(200, 1, 0.2, 1000, ruleta, punto, intercambio, steady_state, math.floor(200/2), 100, 'config51')
